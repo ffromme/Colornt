@@ -13,7 +13,7 @@ class Onboarding extends StatelessWidget {
         children: [
           Positioned.fill(
               child: SvgPicture.asset(
-                'assets/img/Onboard.svg',
+                'assets/images/Onboard.svg',
                 fit: BoxFit.cover,
               )
           ),

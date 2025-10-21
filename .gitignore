@@ -1,3 +1,8 @@
+# API keys
+.env
+.env.*
+!.env.example
+
 # Miscellaneous
 *.class
 *.log
@@ -43,3 +48,25 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase config (jika masih ada)
+**/android/app/google-services.json
+**/ios/Runner/GoogleService-Info.plist
+firebase_options.dart
+
+# macOS
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Windows
+**/windows/flutter/generated_plugin_registrant.cc
+
+# Linux
+**/linux/flutter/generated_plugin_registrant.cc
+
+# Coverage
+coverage/
+
+# Local environment
+*.env.local
+*.env.development
+*.env.production
