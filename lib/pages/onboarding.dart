@@ -33,11 +33,12 @@ class Onboarding extends StatelessWidget {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 48),
+                    padding: const EdgeInsets.symmetric(horizontal: 44),
                     child: Column(
                       children: [
                         Text(
-                          "Lihat!",
+                          "Ayo, Lihat Dunia!",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 32,
@@ -45,8 +46,10 @@ class Onboarding extends StatelessWidget {
                           ),
                         ),
 
+                        SizedBox(height: 12,),
+
                         Text(
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat sed est sit amet commodo.",
+                          "Temukan cara mudah mengenali warna di sekitar kamu lewat teknologi yang ada pada genggamanmu.",
                           style: TextStyle(
                               fontSize: 14,
                               color: HexColor("#FFFFFF")
@@ -54,10 +57,10 @@ class Onboarding extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
 
-                        SizedBox(height: 24,),
+                        SizedBox(height: 32,),
 
                         Container(
-                          height: 4,
+                          height: 6,
                           width: 22,
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -71,7 +74,7 @@ class Onboarding extends StatelessWidget {
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Homepage()
+                            builder: (context) => Homepage()
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -80,7 +83,7 @@ class Onboarding extends StatelessWidget {
                         fixedSize: Size(282, 72),
                       ),
                       child: const Text(
-                        "Ayo Melihat dan Merasakan",
+                        "Mulai Sekarang",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,

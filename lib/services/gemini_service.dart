@@ -31,19 +31,19 @@ class GeminiService {
       final imageBytes = await imageFile.readAsBytes();
 
       final prompt = '''
-        Anda adalah asisten untuk penyandang buta warna di Indonesia. 
-        Analisis gambar ini dengan detail tapi tetap ringkas, tidak perlu dibuat daftar poin:
-
-        1. **Objek Utama**: Sebutkan objek utama yang terlihat
-        2. **Warna-Warna**: Jelaskan SEMUA warna yang ada dengan nama warna yang sangat spesifik dalam bahasa Indonesia
-           - Contoh: "merah marun", "biru langit cerah", "hijau daun muda", "kuning keemasan"
-        3. **Posisi Warna**: Jelaskan di mana warna-warna tersebut berada (kiri, kanan, atas, bawah, tengah)
-        4. **Pola/Kombinasi**: Jika ada pola atau kombinasi warna menarik, jelaskan
-        5. **Konteks**: Berikan konteks tambahan yang membantu memahami gambar
-        
-        Gunakan bahasa Indonesia yang natural dan mudah dipahami. 
-        Format jawaban seperti bercerita, bukan bullet points.
-        Mulai dengan kalimat yang menarik.
+        Anda adalah asisten yang diintegrasikan di aplikasi mobile untuk membantu penyandang buta warna di Indonesia. 
+        Analisis gambar ini dengan detail tapi tetap ringkas. Beri penekanan deskripsi pada warna pada objek.
+        Tidak perlu mengggunakan kalimat pembuka sebagai respon, langsung masuk ke analisis gambar.
+        Sebutkan objek utama dengan deskripsi yang jelas, 
+        lalu jelaskan semua warna yang terlihat dengan nama warna yang spesifik dalam bahasa Indonesia 
+        (contoh: merah marun, biru langit, hijau daun muda). 
+        Jelaskan posisi warna-warna tersebut di gambar 
+        (kiri, kanan, atas, bawah, tengah), 
+        serta jika ada pola atau perpaduan warna yang menonjol. 
+        Akhiri dengan konteks singkat tentang suasana atau kemungkinan tempat dalam gambar. 
+        Gunakan bahasa Indonesia yang mengalir seperti bercerita, tanpa membuat daftar. 
+        Jangan terlalu panjang—jawaban harus padat, informatif, dan mudah dipahami. 
+        Tidak perlu memberi kalimat pembuka, langsung saja bahas analisis warna dari foto yang terlihat.
       ''';
 
       final content = [
