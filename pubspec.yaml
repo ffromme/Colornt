@@ -41,6 +41,8 @@ dependencies:
   google_generative_ai: ^0.4.7
   flutter_dotenv: ^6.0.0
   google_nav_bar: ^5.0.7
+  firebase_core: ^4.2.0
+  firebase_auth: ^6.1.1
 
 dev_dependencies:
   flutter_test:

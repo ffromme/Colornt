@@ -2,27 +2,28 @@ import 'package:appbutawarna/pages/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 Future<void> main() async {
   try {
-    // Load .env file
     await dotenv.load(fileName: ".env");
-
-    // Validasi API key ada
     final apiKey = dotenv.env['GEMINI_API_KEY'];
     if (apiKey == null || apiKey.isEmpty) {
       throw Exception('GEMINI_API_KEY tidak ditemukan di file .env');
     }
-
-    print('✅ API Key berhasil di-load');
-
+    print('API Key berhasil di-load');
   } catch (e) {
-    print('❌ Error loading .env: $e');
-    print('📝 Pastikan file .env ada di root project dan terdaftar di pubspec.yaml');
-
-    // Tetap run app dengan error screen
+    print('Error loading .env: $e');
+    print('Pastikan file .env ada di root project dan terdaftar di pubspec.yaml');
     runApp(const ErrorApp(error: 'File .env tidak ditemukan atau API key kosong'));
     return;
   }
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const AppButaWarna());
 }
