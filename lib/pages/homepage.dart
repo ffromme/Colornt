@@ -1,8 +1,7 @@
-import 'dart:io';
-
+import 'package:appbutawarna/pages/analisisWarna.dart';
+import 'package:appbutawarna/pages/kuisWarna.dart';
+import 'package:appbutawarna/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:image_picker/image_picker.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -12,50 +11,44 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  File? _image;
-  final ImagePicker _picker = ImagePicker();
+  int _selectedIndex = 0;
+  bool _hideNavbar = false;
 
-  Future<void> _openCamera() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+  void navigateBottomBar(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if (_hideNavbar) {
+        _hideNavbar = false;
+      }
+    });
+  }
 
-    if (image != null) {
+  void setNavbarVisibility(bool hide) {
+    if (_hideNavbar != hide) {
       setState(() {
-        _image = File(image.path);
+        _hideNavbar = hide;
       });
-      // di sini kamu bisa lanjut kirim ke LLM atau tampilkan preview-nya
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // tampilkan hasil foto (jika sudah ada)
-            if (_image != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                  child: Image.file(
-                    _image!,
-                    width: 300,
-                    height: 400,
-                    fit: BoxFit.cover,
-                  )
-              )
-            else
-              ElevatedButton(
-                  onPressed: _openCamera,
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: HexColor('#1ABC9C'),
-                      fixedSize: Size(200, 200)
-                  ),
-                  child: Image.asset('assets/img/Camera.png', width: 90,)
-              ),
-          ],
-        ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: [
+          // Tab 1: Analisis Warna
+          AnalisisWarnaPage(
+            onNavbarVisibilityChanged: setNavbarVisibility,
+          ),
+          // Tab 2: Kuis Warna
+          const KuisWarnaPage(),
+        ],
+      ),
+      bottomNavigationBar: _hideNavbar
+          ? null
+          : BottomNavbar(
+        onTabChange: (index) => navigateBottomBar(index),
       ),
     );
   }
