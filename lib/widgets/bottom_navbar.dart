@@ -1,6 +1,6 @@
+import 'package:appbutawarna/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class BottomNavbar extends StatelessWidget {
   void Function(int)? onTabChange;
@@ -17,8 +17,7 @@ class BottomNavbar extends StatelessWidget {
       child: GNav(
         color: Colors.grey[400],
         activeColor: Colors.grey[100],
-        tabActiveBorder: Border.all(color: Colors.white),
-        tabBackgroundColor: HexColor('#1ABC9C'),
+        tabBackgroundColor: AppTheme.primaryColor,
         mainAxisAlignment: MainAxisAlignment.center,
         tabBorderRadius: 12,
         gap: 8,

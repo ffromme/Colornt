@@ -289,13 +289,6 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                           decoration: BoxDecoration(
                             color: HexColor('#1ABC9C'),
                             borderRadius: BorderRadius.circular(24),
-                            boxShadow: [
-                              BoxShadow(
-                                color: HexColor('#1ABC9C').withOpacity(0.3),
-                                blurRadius: 20,
-                                offset: const Offset(0, 8),
-                              ),
-                            ],
                           ),
                           child: Material(
                             color: Colors.transparent,

@@ -96,8 +96,8 @@ class AppTheme {
         fillColor: Colors.grey.shade50,
       ),
 
-      // ✅ PERBAIKAN: Card Theme
-      cardTheme: CardThemeData( // Ganti CardTheme menjadi CardThemeData
+      // Card Theme
+      cardTheme: CardThemeData(
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
@@ -153,7 +153,7 @@ class AppTheme {
         size: 24,
       ),
 
-      // Text Theme (opsional tapi bagus untuk konsistensi)
+      // Text Theme
       textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontSize: 32,
@@ -210,7 +210,7 @@ class AppTheme {
     );
   }
 
-  // ✅ BONUS: Dark Theme (untuk future implementation)
+  // Dark Theme (future implementation)
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,

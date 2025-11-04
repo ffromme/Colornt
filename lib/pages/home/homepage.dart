@@ -37,11 +37,9 @@ class _HomepageState extends State<Homepage> {
       body: IndexedStack(
         index: _selectedIndex,
         children: [
-          // Tab 1: Analisis Warna
           AnalisisWarnaPage(
             onNavbarVisibilityChanged: setNavbarVisibility,
           ),
-          // Tab 2: Kuis Warna
           const KuisWarnaPage(),
         ],
       ),

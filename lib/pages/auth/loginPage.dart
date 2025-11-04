@@ -1,8 +1,8 @@
 import 'package:appbutawarna/pages/home/homepage.dart';
 import 'package:appbutawarna/services/auth_service.dart';
+import 'package:appbutawarna/core/utils/snackbar_helper.dart';
 import 'package:appbutawarna/widgets/primary_button.dart';
 import 'package:appbutawarna/widgets/text_form_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -16,24 +16,62 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-  String errorMessage = '';
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  void login() async {
-    try {
-      await authService.value.signIn(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+  final AuthService _authService = AuthService();
+
+  bool _isLoading = false;
+
+  Future<void> login() async {
+    // try {
+    //   await authService.value.signIn(
+    //     email: emailController.text,
+    //     password: passwordController.text,
+    //   );
+    //   Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => const Homepage()),
+    //         (Route<dynamic> route) => false,
+    //   );
+    // } on FirebaseAuthException catch (e) {
+    //   setState(() {
+    //     errorMessage = e.message ?? 'An error occurred';
+    //   });
+    // }
+    if (emailController.text.trim().isEmpty) {
+      SnackBarHelper.showError(context, "Email tidak boleh kosong");
+      return;
+    }
+    if (passwordController.text.trim().isEmpty) {
+      SnackBarHelper.showError(context, "Password tidak boleh kosong");
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final result = await _authService.signIn(
+      email: emailController.text.trim(),
+      password: passwordController.text,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (!mounted) return;
+
+    if (result.success) {
+      SnackBarHelper.showSuccess(context, result.message);
+
       Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const Homepage()),
-            (Route<dynamic> route) => false,
+          context,
+          MaterialPageRoute(builder: (context) => const Homepage()),
+          (Route<dynamic> route) => false
       );
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message ?? 'An error occurred';
-      });
+    } else {
+      SnackBarHelper.showError(context, result.message);
     }
   }
 

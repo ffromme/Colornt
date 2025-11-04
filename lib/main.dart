@@ -7,15 +7,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
-    // Initialize app configuration
     await AppConfig.initialize();
-
-    // Run app
     runApp(const AppButaWarna());
   } catch (e) {
-    // Jika initialization gagal, tampilkan error screen
     print('Fatal error during initialization: $e');
-
     runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -56,9 +56,7 @@ class AppConfig {
       );
       print('✅ Firebase initialized successfully');
     } catch (e) {
-      // Firebase adalah opsional, jadi kita hanya log error
       print('⚠️ Firebase initialization failed: $e');
-      // Tidak throw error karena app masih bisa jalan tanpa Firebase
     }
   }
 }
