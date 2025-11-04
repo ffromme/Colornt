@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:appbutawarna/core/config/app_config.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:io';
@@ -16,7 +17,7 @@ class GeminiService {
 
     _model = GenerativeModel(
         model: 'gemini-2.0-flash-lite',
-        apiKey: apiKey,
+        apiKey: AppConfig.geminiApiKey,
         generationConfig: GenerationConfig(
           temperature: 0.4,
           topK: 32,

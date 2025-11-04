@@ -1,4 +1,4 @@
-import 'package:appbutawarna/pages/loginPage.dart';
+import 'package:appbutawarna/pages/auth/loginPage.dart';
 import 'package:appbutawarna/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
