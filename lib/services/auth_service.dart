@@ -48,6 +48,7 @@ class AuthService {
   }
 
   Future<AuthResult> createAccount({
+    required String fullName,
     required String email,
     required String password,
 }) async {
@@ -65,7 +66,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       return AuthResult(
         success: false,
-        message: "Terjadi KesalahanL: $e",
+        message: "Terjadi Kesalahan: $e",
       );
     }
   }

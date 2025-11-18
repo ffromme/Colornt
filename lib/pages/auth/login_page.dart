@@ -1,4 +1,5 @@
 import 'package:appbutawarna/core/theme/app_theme.dart';
+import 'package:appbutawarna/pages/auth/register_page.dart';
 import 'package:appbutawarna/pages/home/main_page.dart';
 import 'package:appbutawarna/services/auth_service.dart';
 import 'package:appbutawarna/core/utils/snackbar_helper.dart';
@@ -23,25 +24,11 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
 
   Future<void> login() async {
-    // try {
-    //   await authService.value.signIn(
-    //     email: emailController.text,
-    //     password: passwordController.text,
-    //   );
-    //   Navigator.pushAndRemoveUntil(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => const Homepage()),
-    //         (Route<dynamic> route) => false,
-    //   );
-    // } on FirebaseAuthException catch (e) {
-    //   setState(() {
-    //     errorMessage = e.message ?? 'An error occurred';
-    //   });
-    // }
     if (emailController.text.trim().isEmpty) {
       SnackBarHelper.showError(context, "Email tidak boleh kosong");
       return;
     }
+
     if (passwordController.text.trim().isEmpty) {
       SnackBarHelper.showError(context, "Password tidak boleh kosong");
       return;
@@ -100,20 +87,21 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(color: Colors.black,fontSize: 32, fontWeight: FontWeight.bold)
               ),
         
-              const SizedBox(height: 64,),
+              const SizedBox(height: 48,),
 
-              const Text(
+              // Email label
+              Text(
                 'Email',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey,
+                  color: AppTheme.textSecondary,
                 ),
               ),
         
               const SizedBox(height: 8,),
 
-              // Email
+              // Email TextField
               CustomTextField(
                 controller: emailController,
                 hintText: 'Ketikkan email anda...',
@@ -121,18 +109,21 @@ class _LoginPageState extends State<LoginPage> {
                 enabled: !_isLoading,
               ),
         
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
 
-              const Text(
+              // Password label
+              Text(
                 'Password',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey,
+                  color: AppTheme.textSecondary,
                 ),
               ),
+
+              const SizedBox(height: 8,),
         
-              // Password
+              // Password TextField
               CustomTextField(
                 controller: passwordController,
                 hintText: 'Ketikkan password anda...',
@@ -147,6 +138,40 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: _isLoading ? () {} : login,
                 isLoading: _isLoading,
               ),
+
+              const SizedBox(height: 16,),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Belum punya akun? ",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppTheme.textSecondary,
+                    ),
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Daftar",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: AppTheme.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
+              )
             ],
           ),
         ),

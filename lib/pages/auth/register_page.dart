@@ -1,7 +1,10 @@
+import 'package:appbutawarna/core/theme/app_theme.dart';
+import 'package:appbutawarna/pages/auth/login_page.dart';
 import 'package:appbutawarna/services/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:appbutawarna/core/utils/snackbar_helper.dart';
+import 'package:appbutawarna/widgets/primary_button.dart';
+import 'package:appbutawarna/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -11,126 +14,250 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-  String errorMessage = '';
+  TextEditingController confirmPasswordController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final AuthService _authService = AuthService();
+
+  bool _isLoading = false;
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
-  void register() async {
-    try {
-      await authService.value.createAccount(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message ?? 'An error occurred';
-      });
-      return;
-    }
-     await authService.value.createAccount(
-      email: emailController.text,
-      password: passwordController.text,
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
     );
-    popPage();
+    return emailRegex.hasMatch(email);
   }
 
-  void popPage() {
-    Navigator.pop(context);
+  Future<void> register() async {
+    // Validasi input
+    if (fullNameController.text.trim().isEmpty) {
+      SnackBarHelper.showError(context, "Nama lengkap tidak boleh kosong");
+      return;
+    }
+
+    if (emailController.text.trim().isEmpty) {
+      SnackBarHelper.showError(context, "Email tidak boleh kosong");
+      return;
+    }
+
+    if (!isValidEmail(emailController.text.trim())) {
+      SnackBarHelper.showError(context, "Format email tidak valid");
+      return;
+    }
+
+    if (passwordController.text.trim().isEmpty) {
+      SnackBarHelper.showError(context, "Password tidak boleh kosong");
+      return;
+    }
+    if (confirmPasswordController.text.trim().isEmpty) {
+      SnackBarHelper.showError(context, "Konfirmasi password tidak boleh kosong");
+      return;
+    }
+    if (passwordController.text != confirmPasswordController.text) {
+      SnackBarHelper.showError(context, "Password tidak cocok");
+      return;
+    }
+    if (passwordController.text.length < 6) {
+      SnackBarHelper.showError(context, "Password minimal 6 karakter");
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final result = await _authService.createAccount(
+      fullName: fullNameController.text.trim(),
+      email: emailController.text.trim(),
+      password: passwordController.text,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (!mounted) return;
+
+    if (result.success) {
+      SnackBarHelper.showSuccess(context, result.message);
+
+      // Kembali ke halaman login setelah berhasil register
+      Navigator.pop(context);
+    } else {
+      SnackBarHelper.showError(context, result.message);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Email TextField
-            TextFormField(
-              style: const TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                labelText: "Email",
-                labelStyle: const TextStyle(color: Colors.black),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.grey, width: 1.5),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: HexColor('#1ABC9C'), width: 2.5),
+      backgroundColor: AppTheme.backgroundColor,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+
+              Text(
+                "Halo,",
+                style: TextStyle(
+                  color: AppTheme.primaryColor,
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
 
-            const SizedBox(height: 20),
-
-            // Password TextField
-            TextFormField(
-              obscureText: true,
-              style: const TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                labelText: "Password",
-                labelStyle: const TextStyle(color: Colors.black),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Colors.grey, width: 1.5),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: HexColor('#1ABC9C'), width: 2.5),
+              Text(
+                "Selamat Datang!",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            SizedBox(height: 10,),
 
-            Text(
-              errorMessage,
-              style: const TextStyle(color: Colors.red),
-            ),
+              const SizedBox(height: 48),
 
-            const SizedBox(height: 20),
+              // Nama lengkap Label
+              Text(
+                'Nama Lengkap',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textSecondary,
+                ),
+              ),
 
-            SizedBox(height: 32,),
+              const SizedBox(height: 8),
 
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  shadowColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: HexColor('#1ABC9C'), width: 2),
+              // Nama lengkap TextField
+              CustomTextField(
+                controller: fullNameController,
+                hintText: 'Ketikkan nama lengkap anda...',
+                keyboardType: TextInputType.emailAddress,
+                enabled: !_isLoading,
+              ),
+
+              const SizedBox(height: 8),
+
+              // Email Label
+              Text(
+                'Email',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              // Email TextField
+              CustomTextField(
+                controller: emailController,
+                hintText: 'Ketikkan email anda...',
+                keyboardType: TextInputType.emailAddress,
+                enabled: !_isLoading,
+              ),
+
+              const SizedBox(height: 24),
+
+              // Password Label
+              Text(
+                'Password',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              // Password TextField
+              CustomTextField(
+                controller: passwordController,
+                hintText: 'Ketikkan password anda...',
+                obscureText: true,
+                enabled: !_isLoading,
+              ),
+
+              const SizedBox(height: 24),
+
+              // Konfirmasi Password Label
+              Text(
+                'Konfirmasi Password',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              // Konfirmasi Password TextField
+              CustomTextField(
+                controller: confirmPasswordController,
+                hintText: 'Ketikkan ulang password anda...',
+                obscureText: true,
+                enabled: !_isLoading,
+              ),
+
+              const SizedBox(height: 42),
+
+              // Register Button
+              PrimaryButton(
+                text: _isLoading ? 'Memproses...' : 'Daftar',
+                onPressed: _isLoading ? () {} : register,
+                isLoading: _isLoading,
+              ),
+
+              const SizedBox(height: 16),
+
+              // Link ke halaman login
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Sudah punya akun? ",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppTheme.textSecondary,
+                    ),
                   ),
-                ).copyWith(
-                  overlayColor: WidgetStateProperty.all(HexColor('#1ABC9C').withOpacity(0.2)),
-                ),
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    register();
-                  }
-                },
-                child: Text(
-                  "Sign In",
-                  style: TextStyle(
-                    color: HexColor('#1ABC9C'),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: _isLoading
+                        ? null
+                        : () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Masuk",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppTheme.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
