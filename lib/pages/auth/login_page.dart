@@ -1,10 +1,10 @@
-import 'package:appbutawarna/pages/home/homepage.dart';
+import 'package:appbutawarna/core/theme/app_theme.dart';
+import 'package:appbutawarna/pages/home/main_page.dart';
 import 'package:appbutawarna/services/auth_service.dart';
 import 'package:appbutawarna/core/utils/snackbar_helper.dart';
 import 'package:appbutawarna/widgets/primary_button.dart';
 import 'package:appbutawarna/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -88,11 +88,11 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 132,),
+              const SizedBox(height: 80,),
         
               Text(
-                "Colorn't",
-                style: TextStyle(color: HexColor('#1ABC9C'),fontSize: 24, fontWeight: FontWeight.bold)
+                "Halo,",
+                style: TextStyle(color: AppTheme.primaryColor,fontSize: 48, fontWeight: FontWeight.bold)
               ),
         
               Text(
@@ -118,6 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                 controller: emailController,
                 hintText: 'Ketikkan email anda...',
                 keyboardType: TextInputType.emailAddress,
+                enabled: !_isLoading,
               ),
         
               const SizedBox(height: 32),
@@ -133,14 +134,19 @@ class _LoginPageState extends State<LoginPage> {
         
               // Password
               CustomTextField(
-                  controller: passwordController,
-                  hintText: 'Ketikkan password anda...',
-                  obscureText: true
+                controller: passwordController,
+                hintText: 'Ketikkan password anda...',
+                obscureText: true,
+                enabled: !_isLoading,
               ),
         
               const SizedBox(height: 42,),
         
-              PrimaryButton(text: 'Masuk', onPressed: login),
+              PrimaryButton(
+                text: _isLoading ? 'Memproses...' : 'Masuk',
+                onPressed: _isLoading ? () {} : login,
+                isLoading: _isLoading,
+              ),
             ],
           ),
         ),

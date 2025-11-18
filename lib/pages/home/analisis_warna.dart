@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appbutawarna/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
@@ -287,7 +288,7 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                           width: 200,
                           height: 200,
                           decoration: BoxDecoration(
-                            color: HexColor('#1ABC9C'),
+                            color: AppTheme.primaryColor,
                             borderRadius: BorderRadius.circular(24),
                           ),
                           child: Material(

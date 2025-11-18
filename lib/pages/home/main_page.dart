@@ -1,5 +1,5 @@
-import 'package:appbutawarna/pages/analysis/analisisWarna.dart';
-import 'package:appbutawarna/pages/home/kuisWarna.dart';
+import 'package:appbutawarna/pages/home/analisis_warna.dart';
+import 'package:appbutawarna/pages/home/kuis_warna.dart';
 import 'package:appbutawarna/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 

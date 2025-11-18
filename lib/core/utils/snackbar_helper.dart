@@ -1,3 +1,4 @@
+import 'package:appbutawarna/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -20,7 +21,7 @@ class SnackBarHelper {
             ),
           ],
         ),
-        backgroundColor: HexColor('#1ABC9C'),
+        backgroundColor: AppTheme.primaryColor,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),

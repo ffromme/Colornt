@@ -3,14 +3,14 @@ import 'package:hexcolor/hexcolor.dart';
 
 class AppTheme {
   // Brand Colors
-  static final Color primaryColor = HexColor('#1ABC9C');
+  static final Color primaryColor = HexColor('#00A8A8');
   static const Color secondaryColor = Colors.white;
   static const Color errorColor = Colors.red;
-  static const Color backgroundColor = Colors.white;
+  static final Color backgroundColor = HexColor('#FAFEFF');
 
   // Text Colors
-  static const Color textPrimary = Colors.black87;
-  static const Color textSecondary = Colors.black54;
+  static final Color textPrimary = HexColor('#0D1B1E');
+  static final Color textSecondary = HexColor('#64748B');
   static final Color textOnPrimary = Colors.white;
 
   static ThemeData get lightTheme {
@@ -154,7 +154,7 @@ class AppTheme {
       ),
 
       // Text Theme
-      textTheme: const TextTheme(
+      textTheme: TextTheme(
         displayLarge: TextStyle(
           fontSize: 32,
           fontWeight: FontWeight.bold,
