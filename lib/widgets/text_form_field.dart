@@ -1,4 +1,6 @@
+import 'package:appbutawarna/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -7,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final String? Function(String?)? validator;
   final Widget? prefixIcon;
+  final bool enabled;
 
   const CustomTextField({
     Key? key,
@@ -16,6 +19,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.validator,
     this.prefixIcon,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -24,28 +28,32 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
+      enabled: enabled,
       validator: validator,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         hintText: hintText,
         hintStyle: TextStyle(
-          color: Colors.grey.shade400,
-          fontSize: 14,
+          color: HexColor('#94A3B8'),
+          fontSize: 16,
         ),
         filled: true,
-        fillColor: const Color(0xFFF2F2F2),
+        fillColor: HexColor('#F3F4F6'),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(
+            color: HexColor('#CBD5E1'),
+            width: 1,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            color: Color(0xFF1ABC9C),
+          borderSide: BorderSide(
+            color: AppTheme.primaryColor,
             width: 2,
           ),
         ),

@@ -1,5 +1,5 @@
+import 'package:appbutawarna/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class KuisWarnaPage extends StatelessWidget {
   const KuisWarnaPage({super.key});
@@ -17,7 +17,7 @@ class KuisWarnaPage extends StatelessWidget {
                 Icon(
                   Icons.quiz,
                   size: 100,
-                  color: HexColor('#1ABC9C').withOpacity(0.5),
+                  color: AppTheme.primaryColor.withOpacity(0.5),
                 ),
                 const SizedBox(height: 24),
                 const Text(
@@ -43,7 +43,7 @@ class KuisWarnaPage extends StatelessWidget {
                   icon: const Icon(Icons.play_arrow),
                   label: const Text('Mulai Kuis'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: HexColor('#1ABC9C'),
+                    backgroundColor: AppTheme.primaryColor,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 32,

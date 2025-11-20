@@ -1,5 +1,5 @@
-import 'package:appbutawarna/pages/analisisWarna.dart';
-import 'package:appbutawarna/pages/kuisWarna.dart';
+import 'package:appbutawarna/pages/home/analisis_warna.dart';
+import 'package:appbutawarna/pages/home/kuis_warna.dart';
 import 'package:appbutawarna/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 
@@ -37,17 +37,11 @@ class _HomepageState extends State<Homepage> {
       body: IndexedStack(
         index: _selectedIndex,
         children: [
-          // Tab 1: Analisis Warna
-          AnalisisWarnaPage(
-            onNavbarVisibilityChanged: setNavbarVisibility,
-          ),
-          // Tab 2: Kuis Warna
+          const AnalisisWarnaPage(),
           const KuisWarnaPage(),
         ],
       ),
-      bottomNavigationBar: _hideNavbar
-          ? null
-          : BottomNavbar(
+      bottomNavigationBar: BottomNavbar(
         onTabChange: (index) => navigateBottomBar(index),
       ),
     );
