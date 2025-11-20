@@ -37,15 +37,11 @@ class _HomepageState extends State<Homepage> {
       body: IndexedStack(
         index: _selectedIndex,
         children: [
-          AnalisisWarnaPage(
-            onNavbarVisibilityChanged: setNavbarVisibility,
-          ),
+          const AnalisisWarnaPage(),
           const KuisWarnaPage(),
         ],
       ),
-      bottomNavigationBar: _hideNavbar
-          ? null
-          : BottomNavbar(
+      bottomNavigationBar: BottomNavbar(
         onTabChange: (index) => navigateBottomBar(index),
       ),
     );
