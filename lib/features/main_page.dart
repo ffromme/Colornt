@@ -1,6 +1,6 @@
 import 'package:appbutawarna/core/widgets/bottom_navbar.dart';
 import 'package:appbutawarna/features/analisisWarna/analisis_warna.dart';
-import 'package:appbutawarna/features/kuisWarna/kuis_warna.dart';
+import 'package:appbutawarna/features/kuisWarna/menu_kuis.dart';
 import 'package:appbutawarna/features/profile/profile_page.dart';
 import 'package:appbutawarna/features/riwayat/menu_riwayat.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class _HomePageState extends State<MainPage> {
 
   final pages = const [
     AnalisisWarnaPage(),
-    KuisWarnaPage(),
+    MenuKuis(),
     MenuRiwayat(),
     ProfilePage(),
   ];
