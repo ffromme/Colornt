@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:appbutawarna/pages/onboarding_view.dart';
-import 'package:appbutawarna/pages/home/main_page.dart';
+import 'package:appbutawarna/features/onboarding_view.dart';
+import 'package:appbutawarna/features/main_page.dart';
 
 class AppRoutes {
   static const String onboarding = '/';
@@ -9,7 +9,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> get routes {
     return {
       onboarding: (context) => const OnboardingView(),
-      home: (context) => const Homepage(),
+      home: (context) => const MainPage(),
     };
   }
 

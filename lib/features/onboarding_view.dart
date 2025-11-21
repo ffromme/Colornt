@@ -1,5 +1,5 @@
 import 'package:appbutawarna/core/theme/app_theme.dart';
-import 'package:appbutawarna/pages/auth/login_page.dart';
+import 'package:appbutawarna/features/auth/login_page.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingView extends StatefulWidget {

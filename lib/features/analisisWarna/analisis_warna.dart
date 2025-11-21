@@ -190,7 +190,7 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                             borderRadius: BorderRadius.circular(28),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
+                                color: Colors.black12,
                                 blurRadius: 20,
                               ),
                             ],
@@ -319,15 +319,16 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                       ),
                       const SizedBox(height: 24),
                       Container(
-                        width: 360,
-                        height: double.infinity,
+                        width: 372,
+                        height: 380,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(28),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black12,
                               blurRadius: 20,
+                              offset: Offset(0, 4),
                             ),
                           ],
                         ),
