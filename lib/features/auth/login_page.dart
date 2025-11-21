@@ -1,10 +1,10 @@
 import 'package:appbutawarna/core/theme/app_theme.dart';
-import 'package:appbutawarna/pages/auth/register_page.dart';
-import 'package:appbutawarna/pages/home/main_page.dart';
+import 'package:appbutawarna/features/auth/register_page.dart';
+import 'package:appbutawarna/features/main_page.dart';
 import 'package:appbutawarna/services/auth_service.dart';
 import 'package:appbutawarna/core/utils/snackbar_helper.dart';
-import 'package:appbutawarna/widgets/primary_button.dart';
-import 'package:appbutawarna/widgets/text_form_field.dart';
+import 'package:appbutawarna/core/widgets/primary_button.dart';
+import 'package:appbutawarna/core/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
 
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const Homepage()),
+          MaterialPageRoute(builder: (context) => const MainPage()),
           (Route<dynamic> route) => false
       );
     } else {
