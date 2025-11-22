@@ -5,6 +5,7 @@ class AppTheme {
   // Brand Colors
   static final Color primaryColor = HexColor('#00A8A8');
   static const Color secondaryColor = Colors.white;
+  static final Color grayBrand = HexColor('#F3F4F6');
   static const Color errorColor = Colors.red;
   static final Color backgroundColor = HexColor('#FAFEFF');
 

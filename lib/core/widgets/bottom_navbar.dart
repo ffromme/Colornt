@@ -46,7 +46,7 @@ class BottomNavBar extends StatelessWidget {
             isActive: currentIndex == 2,
           ),
           _item(
-            icon: Icons.person_outline,
+            icon: Icons.person,
             index: 3,
             isActive: currentIndex == 3,
           ),
