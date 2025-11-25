@@ -1,16 +1,15 @@
 import 'package:appbutawarna/core/theme/app_theme.dart';
+import 'package:appbutawarna/features/kuisWarna/models/kategori_kuis.dart';
 import 'package:flutter/material.dart';
 
 class CardKategoriKuis extends StatelessWidget {
-  final String title;
-  final String description;
-  final String image;
+  final KategoriKuis kategori;
+  final VoidCallback onTap;
 
   const CardKategoriKuis({
     super.key,
-    required this.title,
-    required this.description,
-    required this.image,
+    required this.kategori,
+    required this.onTap,
   });
 
   @override
@@ -18,8 +17,9 @@ class CardKategoriKuis extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
         GestureDetector(
-          onTap: () {},
+          onTap: onTap,
           child: Container(
             padding: EdgeInsets.all(16),
             width: 300,
@@ -29,22 +29,26 @@ class CardKategoriKuis extends StatelessWidget {
               borderRadius: BorderRadius.circular(28),
             ),
             child: Image.asset(
-                image,
+                kategori.image,
             ),
           ),
         ),
+
         const SizedBox(height: 12,),
+
         Text(
-          title,
+          kategori.title,
           style: TextStyle(
             color: AppTheme.textPrimary,
             fontWeight: FontWeight.bold,
             fontSize: 24,
           ),
         ),
+
         const SizedBox(height: 8,),
+
         Text(
-          description,
+          kategori.description,
           style: TextStyle(
             color: AppTheme.textSecondary,
             fontSize: 16,
