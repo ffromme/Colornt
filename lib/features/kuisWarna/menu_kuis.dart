@@ -1,4 +1,5 @@
 import 'package:appbutawarna/core/theme/app_theme.dart';
+import 'package:appbutawarna/features/kuisWarna/kuis1/kuis1_instruction.dart';
 import 'package:flutter/material.dart';
 import 'package:appbutawarna/features/kuisWarna/widgets/card_kategori_kuis.dart';
 import 'package:appbutawarna/features/kuisWarna/data/data_kategori.dart';
@@ -30,7 +31,7 @@ class MenuKuis extends StatelessWidget {
               'Pilih kategori kuis yang sudah disediakan.',
               style: TextStyle(
                 color: AppTheme.textSecondary,
-                fontSize: 16,
+                fontSize: 14,
               ),
             ),
 
@@ -45,7 +46,16 @@ class MenuKuis extends StatelessWidget {
                   children: [
 
                     // Kuis 1: Identifikasi Warna
-                    CardKategoriKuis(kategori: kategoriKuis[0], onTap: () {}),
+                    CardKategoriKuis(
+                        kategori: kategoriKuis[0],
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Kuis1Instruction(),
+                            settings: RouteSettings(name: 'Kuis1Instruksi')
+                          ),
+                        )
+                    ),
 
                     const SizedBox(width: 16,),
 
