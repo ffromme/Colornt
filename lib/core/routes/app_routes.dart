@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appbutawarna/features/onboarding_view.dart';
+import 'package:appbutawarna/features/onboarding/onboarding_view.dart';
 import 'package:appbutawarna/features/main_page.dart';
 
 class AppRoutes {

@@ -1,7 +1,7 @@
 import 'package:appbutawarna/core/theme/app_theme.dart';
-import 'package:appbutawarna/core/widgets/card_kategori_kuis.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:appbutawarna/features/kuisWarna/widgets/card_kategori_kuis.dart';
+import 'package:appbutawarna/features/kuisWarna/data/data_kategori.dart';
 
 class MenuKuis extends StatelessWidget {
   const MenuKuis({super.key});
@@ -25,6 +25,7 @@ class MenuKuis extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+
             Text(
               'Pilih kategori kuis yang sudah disediakan.',
               style: TextStyle(
@@ -32,7 +33,9 @@ class MenuKuis extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
+
             const SizedBox(height: 80,),
+
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Padding(
@@ -40,23 +43,20 @@ class MenuKuis extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CardKategoriKuis(
-                        title: "Identifikasi Warna",
-                        description: "Coba tebak warna yang ditampilkan \nuntuk menguji kemampuan mengenali \nwarna dasar.",
-                        image: 'assets/images/kuis1.png'
-                    ),
+
+                    // Kuis 1: Identifikasi Warna
+                    CardKategoriKuis(kategori: kategoriKuis[0], onTap: () {}),
+
                     const SizedBox(width: 16,),
-                    CardKategoriKuis(
-                        title: "Susun Gradasi Warna",
-                        description: "Urutkan warna dari satu warna ke warna \nlain untuk mendeteksi pola buta warna \nsecara lebih akurat.",
-                        image: 'assets/images/kuis2.png'
-                    ),
+
+                    // Kuis 2: Susun Gradasi Warna
+                    CardKategoriKuis(kategori: kategoriKuis[1], onTap: () {}),
+
                     const SizedBox(width: 16,),
-                    CardKategoriKuis(
-                        title: "Cari yang Berbeda",
-                        description: "Temukan warna yang berbeda di antara \nwarna-warna mirip untuk menguji \nsensitivitas penglihatan warna.",
-                        image: 'assets/images/kuis3.png'
-                    ),
+
+                    // Kuis 3: Cari yang Berbeda
+                    CardKategoriKuis(kategori: kategoriKuis[2], onTap: () {}),
+
                   ],
                 ),
               ),
