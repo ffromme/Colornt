@@ -120,234 +120,231 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(0),
-            child: Column(
-              children: [
-                // Tampilkan hasil foto
-                if (_image != null)
-                  Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(28),
-                        child: Image.file(
-                          _image!,
-                          width: 300,
-                          height: 400,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              width: 300,
-                              height: 400,
-                              color: Colors.grey[300],
-                              child: const Center(
-                                child: Text(
-                                  'Gagal memuat gambar',
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      // Loading state
-                      if (_isAnalyzing)
-                        Column(
-                          children: [
-                            CircularProgressIndicator(
-                              color: AppTheme.primaryColor,
-                              strokeWidth: 3,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              "Menganalisis gambar...",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: AppTheme.textPrimary,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              "Mohon tunggu sebentar",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: AppTheme.textSecondary,
-                              ),
-                            ),
-                          ],
-                        )
-
-                      else if (_analysisResult != null && _analysisResult!.isNotEmpty)
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(28),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 20,
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.palette,
-                                    color: AppTheme.primaryColor,
-                                    size: 24,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Tampilkan hasil foto
+                  if (_image != null)
+                    Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(28),
+                          child: Image.file(
+                            _image!,
+                            width: 300,
+                            height: 400,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                width: 300,
+                                height: 400,
+                                color: Colors.grey[300],
+                                child: const Center(
+                                  child: Text(
+                                    'Gagal memuat gambar',
+                                    style: TextStyle(color: Colors.red),
                                   ),
-                                  const SizedBox(width: 8),
-                                  const Text(
-                                    "Hasil Analisis Warna",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+
+                        const SizedBox(height: 24),
+
+                        // Loading state
+                        if (_isAnalyzing)
+                          Column(
+                            children: [
+                              CircularProgressIndicator(
+                                color: AppTheme.primaryColor,
+                                strokeWidth: 3,
                               ),
                               const SizedBox(height: 16),
                               Text(
-                                _analysisResult!,
+                                "Menganalisis gambar...",
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: AppTheme.textPrimary,
                                 ),
                               ),
+                              const SizedBox(height: 8),
+                              Text(
+                                "Mohon tunggu sebentar",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppTheme.textSecondary,
+                                ),
+                              ),
                             ],
-                          ),
-                        ),
+                          )
 
-                      const SizedBox(height: 24),
+                        else if (_analysisResult != null && _analysisResult!.isNotEmpty)
+                          Container(
+                            width: MediaQuery.of(context).size.width - 48,
+                            constraints: BoxConstraints(maxWidth: 360),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(28),
+                              border: Border.all(color: AppTheme.textSecondary.withOpacity(0.25), width: 1),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.palette,
+                                      color: AppTheme.primaryColor,
+                                      size: 24,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const Text(
+                                      "Hasil Analisis Warna",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  _analysisResult!,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: AppTheme.textPrimary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
 
-                      SizedBox(
-                        width: 180,
-                        height: 56,
-                        child: ElevatedButton.icon(
-                          onPressed: _isAnalyzing ? null : _retakeFoto,
-                          icon: const Icon(Icons.camera_alt),
-                          label: const Text("Ambil Foto Lagi"),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppTheme.primaryColor,
-                            foregroundColor: Colors.white,
-                            disabledBackgroundColor: Colors.grey[400],
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 16,
-                            ),
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28),
-                            ),
-                            elevation: 0,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 16,),
-                      SizedBox(
-                        width: 180,
-                        height: 56,
-                        child: ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.save_alt_rounded),
-                          label: const Text("Simpan hasil"),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppTheme.primaryColor,
-                            foregroundColor: Colors.white,
-                            disabledBackgroundColor: Colors.grey[400],
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 16,
-                            ),
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28),
-                            ),
-                            elevation: 0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                else
-                  Column(
-                    children: [
-                      const SizedBox(height: 16,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: _openCamera,
-                            child: Container(
-                              width: 240,
-                              height: 240,
-                              decoration: BoxDecoration(
-                                color: HexColor('#F3F4F6'),
+                        const SizedBox(height: 24),
+
+                        SizedBox(
+                          width: 180,
+                          height: 56,
+                          child: ElevatedButton.icon(
+                            onPressed: _isAnalyzing ? null : _retakeFoto,
+                            icon: const Icon(Icons.camera_alt),
+                            label: const Text("Ambil Foto Lagi"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppTheme.primaryColor,
+                              foregroundColor: Colors.white,
+                              disabledBackgroundColor: Colors.grey[400],
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 16,
+                              ),
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(28),
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.image, color: AppTheme.textSecondary,),
-                                  Text(
-                                    "Ketuk untuk ambil foto",
-                                    style: TextStyle(
-                                      color: AppTheme.textSecondary,
-                                      fontSize: 16,
-                                    ),
-                                  )
-                                ],
-                              ),
+                              elevation: 0,
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      Container(
-                        width: 372,
-                        height: 380,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(28),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 20,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
                         ),
-                        child: Column(
+                        SizedBox(height: 16,),
+                        SizedBox(
+                          width: 180,
+                          height: 56,
+                          child: ElevatedButton.icon(
+                            onPressed: _isAnalyzing ? null : () {},
+                            icon: const Icon(Icons.save_alt_rounded),
+                            label: const Text("Simpan hasil"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppTheme.primaryColor,
+                              foregroundColor: Colors.white,
+                              disabledBackgroundColor: Colors.grey[400],
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 16,
+                              ),
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(28),
+                              ),
+                              elevation: 0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    Column(
+                      children: [
+                        const SizedBox(height: 16,),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "Teks hasil analisis akan muncul di sini.",
-                              style: TextStyle(
-                                color: AppTheme.textSecondary,
-                                fontSize: 16,
+                            GestureDetector(
+                              onTap: _openCamera,
+                              child: Container(
+                                width: 240,
+                                height: 240,
+                                decoration: BoxDecoration(
+                                  color: HexColor('#F3F4F6'),
+                                  borderRadius: BorderRadius.circular(28),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.image, color: AppTheme.textSecondary,),
+                                    Text(
+                                      "Ketuk untuk ambil foto",
+                                      style: TextStyle(
+                                        color: AppTheme.textSecondary,
+                                        fontSize: 16,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-              ],
+                        const SizedBox(height: 24),
+                        Container(
+                          width: MediaQuery.of(context).size.width - 32,
+                          constraints: BoxConstraints(maxWidth: 380),
+                          height: 380,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(28),
+                            border: Border.all(color: AppTheme.textSecondary.withOpacity(0.25), width: 1),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Teks hasil analisis akan muncul di sini.",
+                                  style: TextStyle(
+                                    color: AppTheme.textSecondary,
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
             ),
           ),
         ),

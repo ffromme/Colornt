@@ -1,3 +1,4 @@
+import 'package:appbutawarna/features/kuisWarna/shared/shared_prefs_helper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../../firebase_options.dart';
@@ -15,6 +16,9 @@ class AppConfig {
   /// Initialize app configuration
   static Future<void> initialize() async {
     try {
+      // Initialize SharedPreferences
+      await SharedPrefsHelper().init();
+
       // Load environment variables
       await _loadEnvVariables();
 
