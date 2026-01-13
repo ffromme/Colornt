@@ -2,7 +2,6 @@ import 'package:appbutawarna/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis1/providers/kuis1_provider.dart';
-import 'kuis1_instruction.dart';
 
 class Kuis1ResultPage extends StatelessWidget {
   const Kuis1ResultPage({super.key});
@@ -27,12 +26,6 @@ class Kuis1ResultPage extends StatelessWidget {
       if (accuracy >= 40) return 'Kamu bisa lebih baik lagi!';
       return 'Jangan menyerah, coba lagi ya!';
     }
-
-    // IconData getIcon() {
-    //   if (accuracy >= 80) return Icons.emoji_events;
-    //   if (accuracy >= 60) return Icons.star;
-    //   return Icons.psychology;
-    // }
 
     return Scaffold(
       backgroundColor: Colors.white,
