@@ -1,5 +1,6 @@
 import 'package:appbutawarna/core/theme/app_theme.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis1/kuis1_instruction.dart';
+import 'package:appbutawarna/features/kuisWarna/kuis2/kuis2_instruction.dart';
 import 'package:flutter/material.dart';
 import 'package:appbutawarna/features/kuisWarna/widgets/card_kategori_kuis.dart';
 import 'package:appbutawarna/features/kuisWarna/data/data_kategori.dart';
@@ -60,7 +61,15 @@ class MenuKuis extends StatelessWidget {
                     const SizedBox(width: 16,),
 
                     // Kuis 2: Susun Gradasi Warna
-                    CardKategoriKuis(kategori: kategoriKuis[1], onTap: () {}),
+                    CardKategoriKuis(kategori: kategoriKuis[1],
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Kuis2Instruction(),
+                            settings: RouteSettings(name: 'Kuis2Instruksi')
+                          ),
+                        )
+                    ),
 
                     const SizedBox(width: 16,),
 

@@ -1,0 +1,44 @@
+@startuml
+autonumber
+actor "Pengguna" as user
+participant ":RegisterPage" as ui <<boundary>>
+participant ":AuthController" as ctrl <<control>>
+participant "Firebase Auth" as fb <<system>>
+participant ":User" as user_entity <<entity>>
+
+activate ui
+user -> ui : Isi Form (email, password, nama)
+user -> ui : Klik Tombol "Daftar"
+
+ui -> ctrl : signUp(email, password, nama)
+activate ctrl
+
+ctrl -> ctrl : validateInput()
+
+alt Input Valid
+    ctrl -> fb : createUserWithEmailAndPassword(email, password)
+    activate fb
+
+    alt Firebase Success
+        fb --> ctrl : AuthCredential (UID)
+
+        note right of ctrl : Opsional: Jika menyimpan data\ntambahan ke Firestore setelah auth sukses
+        ctrl -> user_entity ** : create(uid, email, nama)
+
+        ctrl --> ui : Sukses
+        ui -> user : Tampilkan Pesan Sukses / Navigasi ke Home
+    else Firebase Error (misal: email sudah dipakai)
+        fb --> ctrl : Error Message
+        deactivate fb
+        ctrl --> ui : Error Message
+        ui -> user : Tampilkan Pesan Error (Snackbar)
+    end
+
+else Input Tidak Valid
+    ctrl --> ui : Error Validasi
+    ui -> user : Tampilkan Pesan Validasi
+end
+
+deactivate ctrl
+deactivate ui
+@enduml
