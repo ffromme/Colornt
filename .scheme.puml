@@ -1,0 +1,104 @@
+@startuml
+title Skema Relasi NoSQL Aplikasi Colorn't
+
+package "users (collection)" {
+  class User {
+    uid
+    email
+    displayName
+  }
+
+  package "analisis_warna (subcollection)" {
+    class AnalisisWarna {
+      riwayatId
+      imageUrl
+      analysisResult
+      createdAt
+    }
+  }
+
+  package "hasil_kuis (subcollection)" {
+    class HasilKuis {
+      riwayatId
+      quizType
+      score
+      accuracy
+      totalQuestions
+      correctAnswers
+      createdAt
+    }
+  }
+
+  User --> AnalisisWarna
+  User --> HasilKuis
+}
+
+'package "kategori_kuis (collection)" {
+'  class KategoriKuis {
+'    title
+'    description
+'    image
+'  }
+'
+'  package "kuis (subcollection)" {
+'    class Kuis {
+'      type
+'    }
+'
+'    package "questions (subcollection)" {
+'      class Pertanyaan {
+'        image
+'        options
+'        correctAnswerIndex
+'      }
+'    }
+'
+'    Kuis --> Pertanyaan
+'  }
+'
+'  KategoriKuis --> Kuis
+'}
+
+package "kategori_kuis (collection)" {
+  class KategoriKuis {
+    id
+    title
+    description
+    image
+  }
+
+  package "kuis (subcollection)" {
+    class Kuis {
+      id
+      type
+    }
+
+    package "questions (subcollection)" {
+      class Pertanyaan {
+        id
+        type
+        == Variasi Field (Polymorphic) ==
+        .. Tipe 1: Identifikasi Warna ..
+        targetColor
+        colorName
+        options
+        correctAnswerIndex
+        .. Tipe 2: Susun Gradasi ..
+        startColor
+        endColor
+        correctGradient
+        .. Tipe 3: Cari Beda ..
+        baseColor
+        differentColor
+        gridSize
+        differentPosition
+      }
+    }
+
+    Kuis --> Pertanyaan
+  }
+
+  KategoriKuis --> Kuis
+}
+
+@enduml
