@@ -16,7 +16,7 @@ class GeminiService {
     }
 
     _model = GenerativeModel(
-        model: 'gemini-2.0-flash-lite',
+        model: 'gemini-2.5-flash-lite',
         apiKey: AppConfig.geminiApiKey,
         generationConfig: GenerationConfig(
           temperature: 0.4,
@@ -32,19 +32,24 @@ class GeminiService {
       final imageBytes = await imageFile.readAsBytes();
 
       final prompt = '''
-        Anda adalah asisten yang diintegrasikan di aplikasi mobile untuk membantu penyandang buta warna di Indonesia. 
-        Analisis gambar ini dengan detail tapi tetap ringkas. Beri penekanan deskripsi pada warna pada objek.
-        Tidak perlu mengggunakan kalimat pembuka sebagai respon, langsung masuk ke analisis gambar.
-        Sebutkan objek utama dengan deskripsi yang jelas, 
-        lalu jelaskan semua warna yang terlihat dengan nama warna yang spesifik dalam bahasa Indonesia 
-        (contoh: merah marun, biru langit, hijau daun muda). 
-        Jelaskan posisi warna-warna tersebut di gambar 
-        (kiri, kanan, atas, bawah, tengah), 
-        serta jika ada pola atau perpaduan warna yang menonjol. 
-        Akhiri dengan konteks singkat tentang suasana atau kemungkinan tempat dalam gambar. 
-        Gunakan bahasa Indonesia yang mengalir seperti bercerita, tanpa membuat daftar. 
-        Jangan terlalu panjang—jawaban harus padat, informatif, dan mudah dipahami. 
-        Tidak perlu memberi kalimat pembuka, langsung saja bahas analisis warna dari foto yang terlihat.
+        Anda adalah asisten analisis warna dalam aplikasi publik untuk membantu penyandang buta warna di Indonesia.
+
+        Analisis gambar secara fokus pada objek yang paling menonjol dan relevan.
+        Mulailah dengan objek utama, lalu lanjutkan ke objek pendukung yang secara visual penting.
+        
+        Jelaskan warna dengan bahasa alami dan mengalir, seolah Anda sedang membantu seseorang membayangkan isi gambar.
+        
+        Untuk setiap objek penting:
+        - Sebutkan nama objek secara alami dalam kalimat
+        - Jelaskan warna utama dan warna pendukung dengan nama warna spesifik dalam bahasa Indonesia
+        - Sebutkan letak atau arah objek secara singkat jika membantu orientasi
+        - Soroti kontras warna yang cukup jelas atau berpotensi sulit dibedakan
+        
+        Gunakan paragraf naratif singkat, bukan format laporan atau poin-poin.
+        Hindari pengulangan frasa seperti “warna utama”, “warna pendukung”, atau “posisi”.
+        
+        Tidak perlu kalimat pembuka atau penutup.
+        Panjang respons harus padat, informatif, dan nyaman dibaca, dengan gaya asisten manusia profesional, bukan mesin deskriptif.
       ''';
 
       final content = [

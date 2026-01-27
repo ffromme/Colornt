@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:appbutawarna/services/gemini_service.dart';
+import 'package:appbutawarna/services/analysis_history_service.dart';
 
 class AnalisisWarnaPage extends StatefulWidget {
 
@@ -19,6 +20,8 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
   File? _image;
   String? _analysisResult;
   bool _isAnalyzing = false;
+  late final AnalysisHistoryService _historyService;
+  bool _isSavingHistory = false;
 
   final ImagePicker _picker = ImagePicker();
   late final GeminiService _geminiService;
@@ -28,6 +31,7 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
     super.initState();
     try {
       _geminiService = GeminiService();
+      _historyService = AnalysisHistoryService();
     } catch (e) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
@@ -102,6 +106,53 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
       _analysisResult = null;
       _isAnalyzing = false;
     });
+  }
+
+  Future<void> _saveToHistory() async {
+    if (_image == null || _analysisResult == null || _analysisResult!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Tidak ada hasil analisis untuk disimpan'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _isSavingHistory = true;
+    });
+
+    try {
+      await _historyService.saveAnalysis(
+        imageFile: _image!,
+        analysisResult: _analysisResult!,
+      );
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Berhasil disimpan ke riwayat'),
+          backgroundColor: AppTheme.primaryColor,
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Gagal menyimpan: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSavingHistory = false;
+        });
+      }
+    }
   }
 
   @override
@@ -183,6 +234,7 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                             ],
                           )
 
+                          // Hasil analisis
                         else if (_analysisResult != null && _analysisResult!.isNotEmpty)
                           Container(
                             width: MediaQuery.of(context).size.width - 48,
@@ -227,6 +279,7 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
 
                         const SizedBox(height: 24),
 
+                        // Tombol ambil foto lagi
                         SizedBox(
                           width: 180,
                           height: 56,
@@ -253,14 +306,26 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                             ),
                           ),
                         ),
+
                         SizedBox(height: 16,),
+
+                        // Tombol simpan hasil
                         SizedBox(
                           width: 180,
                           height: 56,
                           child: ElevatedButton.icon(
-                            onPressed: _isAnalyzing ? null : () {},
-                            icon: const Icon(Icons.save_alt_rounded),
-                            label: const Text("Simpan hasil"),
+                            onPressed: _isAnalyzing || _isSavingHistory ? null : _saveToHistory,
+                            icon: _isSavingHistory
+                                ? SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : const Icon(Icons.save_alt_rounded),
+                            label: Text(_isSavingHistory ? "Menyimpan..." : "Simpan hasil"),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppTheme.primaryColor,
                               foregroundColor: Colors.white,
@@ -282,6 +347,8 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                         ),
                       ],
                     )
+
+                    // Foto belum diambil
                   else
                     Column(
                       children: [
@@ -315,7 +382,10 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                             ),
                           ],
                         ),
+
                         const SizedBox(height: 24),
+
+                        // Container teks hasil analisis
                         Container(
                           width: MediaQuery.of(context).size.width - 32,
                           constraints: BoxConstraints(maxWidth: 380),
