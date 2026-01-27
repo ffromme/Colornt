@@ -17,6 +17,8 @@
 .swiftpm/
 migrate_working_dir/
 .classDiagram.puml
+.scheme.puml
+.sequenceDiagram.puml
 
 # IntelliJ related
 *.iml
