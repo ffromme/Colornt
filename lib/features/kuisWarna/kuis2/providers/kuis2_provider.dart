@@ -147,9 +147,8 @@ class Kuis2Provider extends ChangeNotifier {
       await _prefs.saveKuis2BestScore(score);
       await _prefs.saveKuis2BestAccuracy(acc);
     }
-
-    // Increment play count
     await _prefs.incrementKuis2PlayCount();
+    await _prefs.saveKuis2LastPlayed(DateTime.now().toIso8601String());
   }
 
   // Get score dan accuracy untuk result page

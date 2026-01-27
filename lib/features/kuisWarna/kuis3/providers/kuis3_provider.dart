@@ -106,9 +106,8 @@ class Kuis3Provider extends ChangeNotifier {
       await _prefs.saveKuis3BestScore(_correctAnswers);
       await _prefs.saveKuis3BestAccuracy(accuracy);
     }
-
-    // Increment play count
     await _prefs.incrementKuis3PlayCount();
+    await _prefs.saveKuis3LastPlayed(DateTime.now().toIso8601String());
   }
 
   // Check apakah kotak adalah jawaban yang benar
