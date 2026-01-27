@@ -1,6 +1,7 @@
 import 'package:appbutawarna/core/theme/app_theme.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis1/kuis1_instruction.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis2/kuis2_instruction.dart';
+import 'package:appbutawarna/features/kuisWarna/kuis3/kuis3_instruction.dart';
 import 'package:flutter/material.dart';
 import 'package:appbutawarna/features/kuisWarna/widgets/card_kategori_kuis.dart';
 import 'package:appbutawarna/features/kuisWarna/data/data_kategori.dart';
@@ -74,7 +75,15 @@ class MenuKuis extends StatelessWidget {
                     const SizedBox(width: 16,),
 
                     // Kuis 3: Cari yang Berbeda
-                    CardKategoriKuis(kategori: kategoriKuis[2], onTap: () {}),
+                    CardKategoriKuis(kategori: kategoriKuis[2],
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Kuis3Instruction(),
+                              settings: RouteSettings(name: 'Kuis3Instruksi')
+                          ),
+                        )
+                    ),
 
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'package:appbutawarna/features/kuisWarna/kuis1/providers/kuis1_provider.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis2/providers/kuis2_provider.dart';
+import 'package:appbutawarna/features/kuisWarna/kuis3/providers/kuis3_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:appbutawarna/core/theme/app_theme.dart';
@@ -14,7 +15,8 @@ class AppButaWarna extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Kuis1Provider()),
-        ChangeNotifierProvider(create: (_) => Kuis2Provider())
+        ChangeNotifierProvider(create: (_) => Kuis2Provider()),
+        ChangeNotifierProvider(create: (_) => Kuis3Provider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
