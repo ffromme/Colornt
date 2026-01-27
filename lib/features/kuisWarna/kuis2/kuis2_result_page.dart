@@ -1,9 +1,7 @@
 import 'package:appbutawarna/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis2/providers/kuis2_provider.dart';
-import 'kuis2_instruction.dart';
 
 class Kuis2ResultPage extends StatelessWidget {
   const Kuis2ResultPage({super.key});

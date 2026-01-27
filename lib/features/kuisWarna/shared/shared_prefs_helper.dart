@@ -169,6 +169,38 @@ class SharedPrefsHelper {
     return await saveKuis2PlayCount(currentCount + 1);
   }
 
+  // Simpan timestamp terakhir main
+  Future<bool> saveKuis2LastPlayed(String timestamp) async {
+    return await prefs.setString('kuis2_last_played', timestamp);
+  }
+
+  // Ambil timestamp terakhir main
+  String? getKuis2LastPlayed() {
+    return prefs.getString('kuis2_last_played');
+  }
+
+  // Ambil semua data riwayat kuis 2
+  Map<String, dynamic> getKuis2History() {
+    return {
+      'lastScore': getKuis2LastScore(),
+      'lastAccuracy': getKuis2LastAccuracy(),
+      'bestScore': getKuis2BestScore(),
+      'bestAccuracy': getKuis2BestAccuracy(),
+      'playCount': getKuis2PlayCount(),
+      'lastPlayed': getKuis2LastPlayed(),
+    };
+  }
+
+  // Reset semua data kuis 2
+  Future<void> resetKuis2Data() async {
+    await prefs.remove('kuis2_last_score');
+    await prefs.remove('kuis2_last_accuracy');
+    await prefs.remove('kuis2_best_score');
+    await prefs.remove('kuis2_best_accuracy');
+    await prefs.remove('kuis2_play_count');
+    await prefs.remove('kuis2_last_played');
+  }
+
   // ==================== KUIS 3 ====================
 
   // Simpan skor terakhir
@@ -225,6 +257,37 @@ class SharedPrefsHelper {
   Future<bool> incrementKuis3PlayCount() async {
     final currentCount = getKuis3PlayCount();
     return await saveKuis3PlayCount(currentCount + 1);
+  }
+
+  // Simpan timestamp terakhir main
+  Future<bool> saveKuis3LastPlayed(String timestamp) async {
+    return await prefs.setString('kuis3_last_played', timestamp);
+  }
+
+  String? getKuis3LastPlayed() {
+    return prefs.getString('kuis3_last_played');
+  }
+
+  // Ambil semua data riwayat kuis 3
+  Map<String, dynamic> getKuis3History() {
+    return {
+      'lastScore': getKuis3LastScore(),
+      'lastAccuracy': getKuis3LastAccuracy(),
+      'bestScore': getKuis3BestScore(),
+      'bestAccuracy': getKuis3BestAccuracy(),
+      'playCount': getKuis3PlayCount(),
+      'lastPlayed': getKuis3LastPlayed(),
+    };
+  }
+
+  // Reset semua data kuis 3
+  Future<void> resetKuis3Data() async {
+    await prefs.remove('kuis3_last_score');
+    await prefs.remove('kuis3_last_accuracy');
+    await prefs.remove('kuis3_best_score');
+    await prefs.remove('kuis3_best_accuracy');
+    await prefs.remove('kuis3_play_count');
+    await prefs.remove('kuis3_last_played');
   }
 
   // ==================== UTILITY ====================

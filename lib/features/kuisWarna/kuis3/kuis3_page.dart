@@ -194,13 +194,6 @@ class _Kuis3PageState extends State<Kuis3Page> {
               : isSelected
               ? Border.all(color: AppTheme.primaryColor, width: 3)
               : null,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
         ),
       ),
     );
