@@ -86,7 +86,7 @@ class SnackBarHelper {
             ),
           ],
         ),
-        backgroundColor: HexColor('#3498DB'),
+        backgroundColor: AppTheme.primaryColor,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
