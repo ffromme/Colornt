@@ -22,51 +22,100 @@ class _QuizHistoryTabState extends State<QuizHistoryTab> {
 
   @override
   Widget build(BuildContext context) {
-    final quizHistories = _quizHistoryService.getAllQuizHistory();
-    final playedQuizzes = quizHistories.where((q) => q.hasBeenPlayed).toList();
+    return StreamBuilder<List<QuizHistory>>(
+      stream: _quizHistoryService.getAllQuizHistory(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: AppTheme.primaryColor,
+            ),
+          );
+        }
 
-    if (playedQuizzes.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.quiz_outlined,
-                size: 64,
-                color: AppTheme.textSecondary,
+        if (snapshot.hasError) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    size: 64,
+                    color: Colors.red[300],
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Terjadi kesalahan',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.textPrimary,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    snapshot.error.toString(),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppTheme.textSecondary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-              SizedBox(height: 16),
-              Text(
-                'Belum ada riwayat kuis',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.textPrimary,
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Mainkan kuis untuk melihat riwayat di sini',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppTheme.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      );
-    }
+            ),
+          );
+        }
 
-    return ListView.builder(
-      padding: EdgeInsets.all(16),
-      itemCount: playedQuizzes.length,
-      itemBuilder: (context, index) {
-        final quiz = playedQuizzes[index];
-        return _buildQuizCard(quiz);
+        final quizHistories = snapshot.data ?? [];
+        final playedQuizzes = quizHistories.where((q) => q.hasBeenPlayed).toList();
+
+        if (playedQuizzes.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.quiz_outlined,
+                    size: 64,
+                    color: AppTheme.textSecondary,
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Belum ada riwayat kuis',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.textPrimary,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Mainkan kuis untuk melihat riwayat di sini',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppTheme.textSecondary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return ListView.builder(
+          padding: EdgeInsets.all(16),
+          itemCount: playedQuizzes.length,
+          itemBuilder: (context, index) {
+            final quiz = playedQuizzes[index];
+            return _buildQuizCard(quiz);
+          },
+        );
       },
     );
   }

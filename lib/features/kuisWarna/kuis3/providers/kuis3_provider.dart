@@ -2,17 +2,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis3/models/kuis3_question.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis3/data/kuis3_questions.dart';
-import 'package:appbutawarna/features/kuisWarna/shared/shared_prefs_helper.dart';
+import 'package:appbutawarna/services/quiz_history_service.dart';
 
 class Kuis3Provider extends ChangeNotifier {
-  // Helper
-  final _prefs = SharedPrefsHelper();
+  final _quizHistoryService = QuizHistoryService();
 
-  // Data soal
   final List<Kuis3Question> _allQuestions = Kuis3Questions.getAllQuestions();
   List<Kuis3Question> _currentQuestions = [];
 
-  // State kuis
   int _currentIndex = 0;
   int _correctAnswers = 0;
   int? _selectedBox;
@@ -96,18 +93,15 @@ class Kuis3Provider extends ChangeNotifier {
 
   // Simpan hasil kuis menggunakan helper
   Future<void> saveQuizResult() async {
-    // Simpan skor terakhir
-    await _prefs.saveKuis3LastScore(_correctAnswers);
-    await _prefs.saveKuis3LastAccuracy(accuracy);
-
-    // Update best score jika lebih tinggi
-    final bestScore = _prefs.getKuis3BestScore();
-    if (_correctAnswers > bestScore) {
-      await _prefs.saveKuis3BestScore(_correctAnswers);
-      await _prefs.saveKuis3BestAccuracy(accuracy);
+    try {
+      await _quizHistoryService.saveQuizResult(
+        quizId: 'kuis3',
+        score: _correctAnswers,  // ← Langsung pakai _correctAnswers
+        accuracy: accuracy,       // ← Sudah ada getter accuracy
+      );
+    } catch (e) {
+      print('Error saving quiz result: $e');
     }
-    await _prefs.incrementKuis3PlayCount();
-    await _prefs.saveKuis3LastPlayed(DateTime.now().toIso8601String());
   }
 
   // Check apakah kotak adalah jawaban yang benar
