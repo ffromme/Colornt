@@ -1,19 +1,16 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../models/kuis2_question.dart';
-import '../data/kuis2_questions.dart';
-import '../../shared/shared_prefs_helper.dart';
+import 'package:appbutawarna/features/kuisWarna/kuis2/models/kuis2_question.dart';
+import 'package:appbutawarna/features/kuisWarna/kuis2/data/kuis2_questions.dart';
+import 'package:appbutawarna/services/quiz_history_service.dart';
 
 class Kuis2Provider extends ChangeNotifier {
-  // Helper
-  final _prefs = SharedPrefsHelper();
+  final _quizHistoryService = QuizHistoryService();
 
-  // Data soal
   final List<Kuis2Question> _allQuestions = Kuis2Questions.getAllQuestions();
   Kuis2Question? _currentQuestion;
 
-  // State kuis
-  Map<int, Color> _filledSlots = {}; // Index slot -> Color
+  Map<int, Color> _filledSlots = {};
   List<Color> _availableColors = [];
   bool _isCompleted = false;
 
@@ -137,18 +134,15 @@ class Kuis2Provider extends ChangeNotifier {
     final score = calculateScore();
     final acc = accuracy;
 
-    // Simpan skor terakhir
-    await _prefs.saveKuis2LastScore(score);
-    await _prefs.saveKuis2LastAccuracy(acc);
-
-    // Update best score jika lebih tinggi
-    final bestScore = _prefs.getKuis2BestScore();
-    if (score > bestScore) {
-      await _prefs.saveKuis2BestScore(score);
-      await _prefs.saveKuis2BestAccuracy(acc);
+    try {
+      await _quizHistoryService.saveQuizResult(
+        quizId: 'kuis2',
+        score: score,
+        accuracy: acc,
+      );
+    } catch (e) {
+      print('Error saving quiz result: $e');
     }
-    await _prefs.incrementKuis2PlayCount();
-    await _prefs.saveKuis2LastPlayed(DateTime.now().toIso8601String());
   }
 
   // Get score dan accuracy untuk result page

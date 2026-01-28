@@ -2,10 +2,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis1/models/kuis1_question.dart';
 import 'package:appbutawarna/features/kuisWarna/kuis1/data/kuis1_questions.dart';
-import 'package:appbutawarna/features/kuisWarna/shared/shared_prefs_helper.dart';
+import 'package:appbutawarna/services/quiz_history_service.dart';
 
 class Kuis1Provider extends ChangeNotifier {
-  final _prefs = SharedPrefsHelper();
+  final _quizHistoryService = QuizHistoryService();
 
   final List<Kuis1Question> _allQuestions = Kuis1Questions.getAllQuestions();
   List<Kuis1Question> _currentQuestions = [];
@@ -15,6 +15,7 @@ class Kuis1Provider extends ChangeNotifier {
   int? _selectedAnswer;
   bool _isAnswered = false;
 
+  // Getter
   List<Kuis1Question> get currentQuestions => _currentQuestions;
   int get currentIndex => _currentIndex;
   int get correctAnswer => _correctAnswers;
@@ -81,19 +82,14 @@ class Kuis1Provider extends ChangeNotifier {
   }
 
   Future<void> saveQuizResult() async {
-    await _prefs.saveKuis1LastScore(_correctAnswers);
-    await _prefs.saveKuis1LastAccuracy(accuracy);
-
-    final bestScore = _prefs.getKuis1BestScore();
-    if (_correctAnswers > bestScore) {
-      await _prefs.saveKuis1BestScore(_correctAnswers);
-      await _prefs.saveKuis1BestAccuracy(accuracy);
+    try {
+      await _quizHistoryService.saveQuizResult(
+        quizId: 'kuis1',
+        score: _correctAnswers,
+        accuracy: accuracy,
+      );
+    } catch (e) {
+      print('Error saving quiz result: $e');
     }
-    await _prefs.incrementKuis1PlayCount();
-    await _prefs.saveKuis1LastPlayed(DateTime.now().toIso8601String());
-  }
-
-  Map<String, dynamic> getQuizHistory() {
-    return _prefs.getKuis1History();
   }
 }
