@@ -74,35 +74,37 @@ class _QuizHistoryTabState extends State<QuizHistoryTab> {
 
         if (playedQuizzes.isEmpty) {
           return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.quiz_outlined,
-                    size: 64,
-                    color: AppTheme.textSecondary,
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Belum ada riwayat kuis',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.textPrimary,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Mainkan kuis untuk melihat riwayat di sini',
-                    style: TextStyle(
-                      fontSize: 14,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.quiz_outlined,
+                      size: 64,
                       color: AppTheme.textSecondary,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                    SizedBox(height: 16),
+                    Text(
+                      'Belum ada riwayat kuis',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.textPrimary,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Mainkan kuis untuk melihat riwayat di sini',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppTheme.textSecondary,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -147,10 +149,10 @@ class _QuizHistoryTabState extends State<QuizHistoryTab> {
             padding: EdgeInsets.all(12),
             child: Row(
               children: [
-                // Gambar/Icon
+                // Gambar/icon
                 Container(
-                  width: 80,
-                  height: 80,
+                  width: 60,
+                  height: 60,
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: AppTheme.primaryColor.withOpacity(0.1),
@@ -172,7 +174,7 @@ class _QuizHistoryTabState extends State<QuizHistoryTab> {
                       Text(
                         _formatDate(quiz.lastPlayed),
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: AppTheme.textSecondary,
                         ),
                       ),
@@ -197,7 +199,7 @@ class _QuizHistoryTabState extends State<QuizHistoryTab> {
                           Text(
                             '${quiz.lastAccuracy.toStringAsFixed(0)}% akurat',
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 12,
                               color: AppTheme.textSecondary,
                             ),
                           ),
@@ -211,7 +213,7 @@ class _QuizHistoryTabState extends State<QuizHistoryTab> {
                           Text(
                             '${quiz.playCount}x dimainkan',
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 12,
                               color: AppTheme.textSecondary,
                             ),
                           ),
