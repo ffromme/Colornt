@@ -238,7 +238,6 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                         else if (_analysisResult != null && _analysisResult!.isNotEmpty)
                           Container(
                             width: MediaQuery.of(context).size.width - 48,
-                            constraints: BoxConstraints(maxWidth: 360),
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -286,7 +285,7 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                           child: ElevatedButton.icon(
                             onPressed: _isAnalyzing ? null : _retakeFoto,
                             icon: const Icon(Icons.camera_alt),
-                            label: const Text("Ambil Foto Lagi"),
+                            label: const Text("Foto Lagi"),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppTheme.primaryColor,
                               foregroundColor: Colors.white,
@@ -388,7 +387,6 @@ class _AnalisisWarnaPageState extends State<AnalisisWarnaPage> {
                         // Container teks hasil analisis
                         Container(
                           width: MediaQuery.of(context).size.width - 32,
-                          constraints: BoxConstraints(maxWidth: 380),
                           height: 380,
                           decoration: BoxDecoration(
                             color: Colors.white,
