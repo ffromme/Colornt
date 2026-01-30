@@ -185,7 +185,7 @@ lib/
 
 1. **Clone repository**
 ```bash
-   git clone https://github.com/username/colornt.git
+   git clone https://github.com/ffromme/colornt.git
    cd colornt
 ```
 
@@ -246,7 +246,7 @@ lib/
 
 ## 🤝 Kontribusi
 
-Kami sangat terbuka untuk kontribusi! Berikut cara berkontribusi:
+Saya sangat terbuka untuk kontribusi! Berikut cara berkontribusi:
 
 1. **Fork** repository ini
 2. Buat **branch** fitur baru (`git checkout -b feature/AmazingFeature`)
@@ -268,7 +268,6 @@ Kami sangat terbuka untuk kontribusi! Berikut cara berkontribusi:
 - [Google Gemini AI](https://ai.google.dev) untuk API analisis warna
 - [Firebase](https://firebase.google.com) untuk backend infrastructure
 - [Cloudinary](https://cloudinary.com) untuk image hosting
-- Komunitas Flutter Indonesia
 
 ---
 
